@@ -8,40 +8,40 @@
 
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="style.css" />
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
-  <header>
-    <h1>⏳ Time Arena</h1>
-    <p class="sub">Time Winner vs Time Loser</p>
-  </header>
 
-  <section class="stats">
-    <div class="stat"><div class="label">Minutes</div><div id="minutes" class="value">0</div></div>
-    <div class="stat"><div class="label">Score</div><div id="score" class="value">0</div></div>
-    <div class="stat"><div class="label">Lives ❤️</div><div id="lives" class="value">3</div></div>
-    <div class="stat"><div class="label">Streak 🔥</div><div id="streak" class="value">0</div></div>
-    <div class="stat"><div class="label">Level 🧱</div><div id="level" class="value">1</div></div>
-  </section>
+<header>
+  <h1>⏳ Time Arena</h1>
+  <p class="sub">Shared Family Score</p>
+</header>
 
-  <section class="actions">
-    <h2>Quick Actions</h2>
+<section class="stats">
+  <div class="stat"><div class="label">Minutes</div><div id="minutes" class="value">0</div></div>
+  <div class="stat"><div class="label">Score</div><div id="score" class="value">0</div></div>
+  <div class="stat"><div class="label">Lives ❤️</div><div id="lives" class="value">0</div></div>
+  <div class="stat"><div class="label">Streak 🔥</div><div id="streak" class="value">0</div></div>
+  <div class="stat"><div class="label">Level 🧱</div><div id="level" class="value">0</div></div>
+</section>
 
-    <button class="btn win" id="btnHomework">✅ Homework (+20 pts, +30 min)</button>
-    <button class="btn win" id="btnLanguages">📚 Languages (+15 pts, +20 min)</button>
-    <button class="btn win" id="btnChores">🧼 Chores (+10 pts, +15 min)</button>
+<section class="actions">
+  <button class="btn win" id="btnHomework">✅ Homework</button>
+  <button class="btn win" id="btnLanguages">📚 Languages</button>
+  <button class="btn win" id="btnChores">🧼 Chores</button>
 
-    <button class="btn lose" id="btnRefused">❌ Refused task (−20 pts, −30 min, −1 life)</button>
-    <button class="btn lose" id="btnDisrespect">😤 Disrespect (−30 pts, −30 min, −1 life)</button>
+  <button class="btn lose" id="btnRefused">❌ Refused task</button>
+  <button class="btn lose" id="btnDisrespect">😤 Disrespect</button>
+</section>
 
-    <button class="btn neutral" id="btnReset">🔁 Reset (keeps history)</button>
-    <button class="btn danger" id="btnHardReset">🗑️ Hard Reset (deletes everything)</button>
-  </section>
+<section class="history">
+  <h2>History</h2>
+  <ul id="history"></ul>
+</section>
 
-  <section class="history">
-    <h2>History</h2>
-    <ul id="history"></ul>
-  </section>
-
-  <script src="app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
