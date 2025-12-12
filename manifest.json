@@ -1,10 +1,10 @@
 {
-  "name": "TimeArena Gamify",
+  "name": "TimeArena Gamify — Kid Edition",
   "short_name": "TimeArena",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#eaf4ff",
-  "theme_color": "#2d7cf6",
+  "background_color": "#0f1116",
+  "theme_color": "#111318",
   "icons": [
     { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
