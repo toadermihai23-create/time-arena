@@ -151,30 +151,55 @@ function itemHTML(x, mode){
 function render(){
   updateHeader();
 
-  // Dashboard: active quests = responsibilities + winners (demo)
-  const unlocked = areResponsibilitiesDone();
-  const active = [
-    ...state.responsibilities.map(r => ({
-      ...r,
-      desc: unlocked ? r.desc : `${r.desc} (Deblochează bonusurile!)`
-    })),
-    ...state.winners
-  ];
+  // Responsibilities
+  const respHTML = state.responsibilities.map(x => questCard(x, "complete")).join("");
+  document.querySelector("#responsibilitiesList").innerHTML = respHTML;
+  document.querySelector("#responsibilitiesFull").innerHTML = respHTML;
 
-  $("#activeQuests").innerHTML = active.map(x => itemHTML(x, "active")).join("");
-  $("#doneQuests").innerHTML = state.completedToday.map(x => itemHTML(x, "done")).join("");
+  // Winners (pe dashboard list)
+  document.querySelector("#winnersList").innerHTML =
+    state.winners.slice(0, 6).map(x => questCard(x, "complete")).join("");
 
-  // Responsibilities view
-  $("#responsibilitiesList").innerHTML =
-    state.responsibilities.map(x => itemHTML(x, "active")).join("");
+  // Arena grids
+  document.querySelector("#winnersGrid").innerHTML =
+    state.winners.map(x => questCard(x, "complete")).join("");
 
-  // Winners/Losers lists
-  $("#winnersList").innerHTML = state.winners.map(x => itemHTML(x, "active")).join("");
-  $("#losersList").innerHTML = state.losers.map(x => itemHTML(x, "active")).join("");
+  document.querySelector("#losersGrid").innerHTML =
+    state.losers.map(x => questCard(x, "complete")).join("");
+
+  // Done
+  document.querySelector("#doneQuests").innerHTML =
+    state.completedToday.length
+      ? state.completedToday.map(x => questCard(x, "done")).join("")
+      : `<div class="muted small">Încă nu ai finalizat nimic azi. Începe cu o misiune Winner.</div>`;
 
   // Store
-  $("#storeList").innerHTML = state.store.map(x => itemHTML(x, "store")).join("");
+  document.querySelector("#storeList").innerHTML =
+    state.store.map(x => storeCard(x)).join("");
+
+  // Bonus lock state
+  const unlocked = areResponsibilitiesDone();
+  const bonusState = document.querySelector("#bonusState");
+  const bonusHint = document.querySelector("#bonusHint");
+  const lockBadge = document.querySelector("#lockBadge");
+
+  if (unlocked){
+    bonusState.textContent = "🔓 Deblocat";
+    bonusState.style.color = "var(--green)";
+    bonusHint.textContent = "Bonusurile sunt disponibile azi.";
+    if (lockBadge) lockBadge.textContent = "BONUS DEBLOCAT";
+  } else {
+    bonusState.textContent = "🔒 BlocAT";
+    bonusState.style.color = "var(--blue)";
+    bonusHint.textContent = "Completează responsabilitățile.";
+    if (lockBadge) lockBadge.textContent = "BONUS BLOCAT";
+  }
+
+  // Sidebar mini
+  document.querySelector("#miniLevel").textContent = state.level;
+  document.querySelector("#miniPoints").textContent = state.points;
 }
+
 
 function areResponsibilitiesDone(){
   const doneIds = new Set(state.completedToday.map(x => x.id));
@@ -222,6 +247,51 @@ function buyReward(id){
   alert(`Recompensă cumpărată: ${item.title}`);
   render();
 }
+
+function questCard(x, mode){
+  const cat = x.category ? `<span class="pill pill-cat">${x.category}</span>` : "";
+  const xp = `<span class="pill pill-xp">⭐ ${x.points} XP</span>`;
+
+  const action =
+    mode === "done"
+      ? `<span class="btn-done">✔ Finalizat</span>`
+      : `<button class="btn-go" data-complete="${x.id}">▶ Finalizează</button>`;
+
+  return `
+    <div class="quest">
+      <div class="left">
+        <div class="ic">${x.icon || "✨"}</div>
+        <div>
+          <div class="q-title">${x.title}</div>
+          <div class="q-desc">${x.desc || ""}</div>
+          <div class="meta">${cat}${xp}</div>
+        </div>
+      </div>
+      <div class="action">
+        ${action}
+      </div>
+    </div>
+  `;
+}
+
+function storeCard(x){
+  return `
+    <div class="store-item">
+      <div class="store-top">
+        <div style="display:flex; gap:12px;">
+          <div class="ic">${x.icon || "🎁"}</div>
+          <div>
+            <div class="store-title">${x.title}</div>
+            <div class="store-desc">${x.desc}</div>
+          </div>
+        </div>
+        <span class="badge badge-lock">${x.cost} XP</span>
+      </div>
+      <button class="btn-buy" data-buy="${x.id}">Cumpără</button>
+    </div>
+  `;
+}
+
 
 // ---------- navigation ----------
 function setView(view){
@@ -277,4 +347,5 @@ $("#btnAddCustom").addEventListener("click", () => {
 
 // init
 render();
+
 
