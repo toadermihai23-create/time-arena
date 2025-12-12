@@ -1,7 +1,7 @@
 // TimeArena Gamify — UI demo data (înlocuiești cu datele tale din Firebase / DB)
 
 const state = {
-  userName: "Alex",
+  userName: "Nikita",
   level: 1,
   points: 20,
   nextLevelAt: 100, // prag nivel următor (demo)
@@ -277,3 +277,4 @@ $("#btnAddCustom").addEventListener("click", () => {
 
 // init
 render();
+
