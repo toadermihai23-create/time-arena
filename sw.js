@@ -1,4 +1,4 @@
-const CACHE = "time-arena-v5";
+const CACHE = "time-arena-v8";
 const ASSETS = [
   "./",
   "./index.html",
@@ -10,13 +10,9 @@ const ASSETS = [
 ];
 
 self.addEventListener("install", e => {
-  e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(ASSETS))
-  );
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
 });
 
 self.addEventListener("fetch", e => {
-  e.respondWith(
-    caches.match(e.request).then(r => r || fetch(e.request))
-  );
+  e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
 });
