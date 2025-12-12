@@ -1,8 +1,9 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ro">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
   <title>TimeArena Gamify</title>
 
   <!-- ICON -->
@@ -13,13 +14,15 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#2d7cf6">
 
-  <link rel="stylesheet" href="style.css"/>
+  <!-- STYLES -->
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+
 <div class="app">
 
-  <!-- SIDEBAR -->
+  <!-- ================= SIDEBAR ================= -->
   <aside class="sidebar">
     <div class="brand">
       <div class="brand-badge">⏳</div>
@@ -37,80 +40,123 @@
     </nav>
 
     <div class="sidebar-card">
-      <div class="sidebar-card-title">Status</div>
-      <span class="chip">Nivel <b id="miniLevel">1</b></span>
-      <span class="chip">⭐ <b id="miniPoints">0</b> XP</span>
+      <div class="sidebar-card-title">Status rapid</div>
+      <div class="chips">
+        <span class="chip">Nivel <b id="miniLevel">1</b></span>
+        <span class="chip">⭐ <b id="miniPoints">0</b> XP</span>
+      </div>
     </div>
   </aside>
 
-  <!-- MAIN -->
+  <!-- ================= MAIN ================= -->
   <main class="main">
 
+    <!-- HEADER -->
     <header class="header">
       <div>
         <h1 id="welcomeTitle">Salut, Nikita! 👋</h1>
-        <p class="muted">Câștigă XP prin alegeri bune. Deblochează bonusuri.</p>
+        <p class="muted">
+          Joacă inteligent. Fă misiuni, câștigă XP și deblochează bonusuri.
+        </p>
       </div>
-      <div>
-        <button id="btnAddCustom" class="btn primary">+ Misiune</button>
-        <button id="btnResetDay" class="btn">Reset zi</button>
+      <div class="header-actions">
+        <button id="btnAddCustom" class="btn primary">➕ Creează misiune</button>
+        <button id="btnResetDay" class="btn">🔄 Reset zi</button>
       </div>
     </header>
 
     <!-- HUD -->
     <section class="hud">
       <div class="hud-card">
-        <div>Nivel</div>
-        <b id="level">1</b>
+        <div class="hud-label">Nivel</div>
+        <div class="hud-value" id="level">1</div>
       </div>
+
       <div class="hud-card">
-        <div>XP</div>
-        ⭐ <b id="points">0</b>
+        <div class="hud-label">XP</div>
+        <div class="hud-value">⭐ <span id="points">0</span></div>
       </div>
+
       <div class="hud-card wide">
-        <div>Progres</div>
+        <div class="hud-label">Progres</div>
         <div class="progress">
-          <div id="progressBar" class="progress-bar"></div>
+          <div class="progress-bar" id="progressBar"></div>
         </div>
-        <small><span id="toNext">100</span> XP până la nivelul următor</small>
+        <div class="hud-sub">
+          <span id="toNext">100</span> XP până la nivelul următor
+        </div>
       </div>
+
       <div class="hud-card">
-        <div>Bonus</div>
-        <b id="bonusState">🔒 BlocAT</b>
+        <div class="hud-label">Bonus</div>
+        <div class="hud-value" id="bonusState">🔒 BlocAT</div>
       </div>
     </section>
 
-    <!-- VIEWS -->
+    <!-- ================= VIEWS ================= -->
+
+    <!-- DASHBOARD -->
     <section class="view active" id="view-dashboard">
-      <h2>🟢 Time Winners</h2>
+
+      <h2>🔒 Responsabilități obligatorii</h2>
+      <div id="responsibilitiesList"></div>
+
+      <h2>🟢 Time Winners (câștig)</h2>
       <div id="winnersList"></div>
 
-      <h2>🔴 Time Losers</h2>
+      <h2>🔴 Time Losers (consecințe)</h2>
       <div id="losersList"></div>
 
       <h2>✅ Finalizate azi</h2>
       <div id="doneQuests"></div>
+
     </section>
 
+    <!-- RESPONSABILITATI -->
     <section class="view" id="view-responsabilitati">
-      <h2>🔒 Responsabilități</h2>
+      <h2>🔒 Responsabilități zilnice</h2>
+      <p class="muted">
+        Acestea trebuie făcute înainte de a câștiga bonusuri.
+      </p>
       <div id="responsibilitiesList"></div>
     </section>
 
+    <!-- ARENA -->
     <section class="view" id="view-arena">
-      <h2>⚔️ Arena</h2>
-      <div id="winnersGrid"></div>
-      <div id="losersGrid"></div>
+      <h2>⚔️ Arena completă</h2>
+
+      <h3>🟢 Time Winners</h3>
+      <div id="winnersList"></div>
+
+      <h3>🔴 Time Losers</h3>
+      <div id="losersList"></div>
     </section>
 
+    <!-- RECOMPENSE -->
     <section class="view" id="view-recompense">
-      <h2>🛍️ Magazin</h2>
+      <h2>🛍️ Recompense</h2>
       <div id="storeList"></div>
     </section>
 
   </main>
+
 </div>
 
+<!-- SCRIPT -->
 <script src="app.js"></script>
+
+<script>
+/* ================= NAVIGATION ================= */
+document.querySelectorAll(".nav-item").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+
+    btn.classList.add("active");
+    document.getElementById("view-" + btn.dataset.view).classList.add("active");
+  });
+});
+</script>
+
 </body>
 </html>
